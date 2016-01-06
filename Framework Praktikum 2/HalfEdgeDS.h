@@ -104,6 +104,11 @@ public:
 
 	// rotates the objects around the x axis
 	void rotateAllVerticesX(const float angleInRadian);
+	// rotates the objects around the y axis
+	void rotateAllVerticesY(const float angleInRadian);
+	// rotates the objects around the z axis
+	void rotateAllVerticesZ(const float angleInRadian);
+
 
 private:
 

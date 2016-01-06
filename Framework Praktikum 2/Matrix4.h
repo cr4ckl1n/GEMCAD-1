@@ -43,6 +43,16 @@ public:
 
 	// rotation around axis x (angle in rad: 2pi = 360°)
 	static Matrix4f rotationXMatrix(float angle);
+	// rotation around axis y (angle in rad: 2pi = 360°)
+	static Matrix4f rotationYMatrix(float angle);
+	// rotation around axis z (angle in rad: 2pi = 360°)
+	static Matrix4f rotationZMatrix(float angle);
+	// scale the matrix  (sx, sy, sz > 1 means upscaleing; sx,sy,sz > 1 means downscaleing; sx,sy,sz < 0 means Mirroring)
+	static Matrix4f scaleMatrix(float sx, float sy, float sz);
+	// Translate the Matrix to point dx,dy,dz.
+	static Matrix4f translateMatrix(int dx, int dy, int dz);
+
+
 
 	// ==================================================
 

@@ -411,6 +411,26 @@ void HalfEdgeDS::rotateAllVerticesX(const float angleInRadian)
 	// ==============================================================================================
 }
 
+void HalfEdgeDS::rotateAllVerticesY(const float angleInRadian)
+{
+	Matrix4f m = Matrix4f::rotationYMatrix(angleInRadian);
+
+	// TODO: apply the transformation on the vertices coordinates and the bezier curve control points
+	// ==============================================================================================
+
+	// ==============================================================================================
+}
+
+void HalfEdgeDS::rotateAllVerticesZ(const float angleInRadian)
+{
+	Matrix4f m = Matrix4f::rotationZMatrix(angleInRadian);
+
+	// TODO: apply the transformation on the vertices coordinates and the bezier curve control points
+	// ==============================================================================================
+
+	// ==============================================================================================
+}
+
 std::ostream& operator<< (std::ostream& os, HalfEdgeDS& ds)
 {
 	os	<< std::endl
