@@ -20,7 +20,7 @@ endif(NOT OPENGL_FOUND)
 # CAUTION: USE "/" (e.g. C:/program files/...) for folder separation, not "\" !!!
 if(WIN32)
 	#set(GLUT_ROOT_PATH "D:/mbein/CPP/OpenGL/freeglut-2.8.1" CACHE PATH "Path to Glut Lib")
-	set(GLUT_ROOT_PATH ${PROJECT_SOURCE_DIR}/../freeglut-2.8.1 CACHE PATH "Path to Glut Lib")	# use relative path. assume glut and this framework are siblings
+	set(GLUT_ROOT_PATH "C:/freeglut-2.8.1" CACHE PATH "Path to Glut Lib")	# use relative path. assume glut and this framework are siblings
 	find_package(GLUT)
 	if(NOT GLUT_FOUND)
 		message(WARNING " GLUT or FREEGLUT not found! Try setting GLUT_ROOT_PATH in CMakeLists.txt.")
