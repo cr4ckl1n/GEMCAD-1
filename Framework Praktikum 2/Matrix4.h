@@ -52,6 +52,8 @@ public:
 	// Translate the Matrix to point dx,dy,dz.
 	static Matrix4f translateMatrix(int dx, int dy, int dz);
 
+	static Matrix4f test_Multiplikation();
+	static Vec4f test_vecMult();
 
 
 	// ==================================================

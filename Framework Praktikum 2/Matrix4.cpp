@@ -11,6 +11,8 @@
 // ========================================================================= //
 
 #include "Matrix4.h"
+#include <stdio.h>		// cout
+#include <iostream>		// cout
 
 Matrix4f::Matrix4f()
 {
@@ -48,10 +50,14 @@ Matrix4f Matrix4f::operator* (const Matrix4f& rightMatrix) const
 			{
 				for( int col = 0 ; col < 4 ; col ++)
 					{ 
-					result.values[row][0] = this->values[0][col] * rightMatrix.values[row][col]
+
+						result.values[row][col] = this->values[row][0] * rightMatrix.values[0][col]
 						+this->values[row][1] * rightMatrix.values[1][col] 
-						+ this->values[row][2] * rightMatrix.values[2][col]
-						+ this->values[row][3] * rightMatrix.values[3][col]; 
+					+ this->values[row][2] * rightMatrix.values[2][col]
+					+ this->values[row][3] * rightMatrix.values[3][col]; 
+						Matrix4f test=	Matrix4f::values[row][col];
+					
+					//	printf("%d", test);
 					}
 				}
 
@@ -66,7 +72,7 @@ Vec4f Matrix4f::operator* (const Vec4f& vec) const
 			{
 				for( int col = 0 ; col < 4 ; col ++)
 					{ 
-						result[row] = this->values[0][col] * vec[0]
+						result[row] = this->values[row][0] * vec[0]
 						+this->values[row][1] * vec[1] 
 						+ this->values[row][2] * vec[2]
 						+ this->values[row][3] * vec[3]; 
@@ -83,6 +89,7 @@ Vec3f Matrix4f::operator*(const Vec3f& vec) const
 	return Vec3f(result.x, result.y, result.z);
 }
 
+
 std::ostream& operator<< (std::ostream& os, const Matrix4f& matrix)
 {
 	os  << matrix.values[0][0] << ", " << matrix.values[0][1] << ", " << matrix.values[0][2] << ", " << matrix.values[0][3] << std::endl
@@ -92,7 +99,7 @@ std::ostream& operator<< (std::ostream& os, const Matrix4f& matrix)
 	return os;
 }
 
-// TODO: implement more basis transformation matrices
+
 // ==================================================
 
 Matrix4f Matrix4f::rotationXMatrix(float angle)
@@ -139,4 +146,48 @@ Matrix4f Matrix4f::translateMatrix(int dx, int dy, int dz){
 	result.values[2][3] = dz;
 	return result;
 }
+
+
+Matrix4f Matrix4f::test_Multiplikation(){
+	Matrix4f a(1.0f);
+	Matrix4f b(1.0f);
+	float c=2.0f; 
+	for (int row=0 ; row < 4 ; row++){
+
+		for(int col=0; col < 4; col++){
+			a.values[row][col] = a.values[row][col] +c;
+			b.values[row][col] = a.values[row][col] +(2.0f*c); 
+	}
+
+	}
+	std::cout << a << std::endl;
+	std::cout << b << std::endl;
+	Matrix4f result = a.operator*(b);
+	std::cout << result << std::endl;
+	return result;
+
+}
+
+Vec4f Matrix4f::test_vecMult(){
+	Matrix4f a(2.0f);
+	Vec4f b;
+	b[3] = 1.0f;
+
+	b.x = 2.0f;
+	b.y = 3.0f;
+	b.z = 4.0f;
+	
+	std::cout << b << std::endl;
+	std::cout << "\n" << std::endl;
+	std::cout << a << std::endl;
+	std::cout << "\n" << std::endl;
+	
+	Vec4f result = a.operator*(b);
+	std::cout << result << std::endl;
+	return result; 
+
+
+}
+
+
 // ==================================================

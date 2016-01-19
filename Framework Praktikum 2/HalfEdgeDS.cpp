@@ -431,6 +431,8 @@ void HalfEdgeDS::rotateAllVerticesZ(const float angleInRadian)
 	// ==============================================================================================
 }
 
+
+
 std::ostream& operator<< (std::ostream& os, HalfEdgeDS& ds)
 {
 	os	<< std::endl
