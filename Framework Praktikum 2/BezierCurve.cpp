@@ -59,7 +59,17 @@ std::pair<BezierCurve, BezierCurve> BezierCurve::separateCurveAt(const float t)
 	std::vector<Vec3f> cps1, cps2;
 	cps1.reserve(controlPoints.size());	
 	cps2.reserve(controlPoints.size());
-	
+	int n = controlPoints.size()-1;
+	for (int i=0; i<= n; i++){ 
+		Q[i] = P[i];  // use local array 
+	}
+	for (int k=1; k <= n; k++){ 
+		for (int i=0; i<=n-k; i++){ 
+			Q[i] = (1.0-t)*Q[i] + t*Q[i+1];
+		}
+	}
+	C = Q[0];
+
 	// TODO: implement de Casteljau algorithm and create two separated bezier curves with the new control points.
 	// ==========================================================================================================
 	

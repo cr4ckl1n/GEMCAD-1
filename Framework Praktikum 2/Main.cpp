@@ -278,11 +278,27 @@ void keyPressed(unsigned char key, int x, int y)
 		heDS.rotateAllVerticesY(10.0f * M_DegToRad);		
 		glutPostRedisplay();	// use this whenever 3d data changed to redraw the scene
 		break;		
+			
+	case 'm' :
+		Matrix4f::test_Multiplikation();
+		break;		
 		// =========================================
 
-	default:
+	case 'q' :
+		Matrix4f::test_vecMult();
+		break;		
+		// =========================================
+
+
+
+		default:
 		std::cout << int(key) << " not bound!" << std::endl;
 		break;
+
+		// =========================================
+
+	
+
 	}
 }
 

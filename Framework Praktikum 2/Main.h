@@ -13,7 +13,7 @@
 // ========================================================================= //
 
 #include <GL/glut.h>	// openGL helper
-
+#include "Matrix4.h"
 #include "HalfEdgeDS.h"	// our half edge data structure
 
 // ===================
@@ -24,6 +24,8 @@ HalfEdgeDS heDS;		// instance of our data structure
 HalfEdge* activeHE;		// the currently active half edge
 int state;
 float evalParameter;
+Matrix4f Matrix;
+
 
 // do not modify data below unless you know what you do
 // camera Information
