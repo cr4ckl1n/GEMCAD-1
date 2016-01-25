@@ -217,7 +217,12 @@ void keyPressed(unsigned char key, int x, int y)
 		break;
 		// numbers starting with 0 (key == 48)
 	case 48:
+		Matrix4f::test_vecMult();
+		break;	
 	case 49:
+		
+		Matrix4f::test_Multiplikation();
+		break;		
 	case 50:
 	case 51:
 	case 52:
@@ -279,16 +284,23 @@ void keyPressed(unsigned char key, int x, int y)
 		glutPostRedisplay();	// use this whenever 3d data changed to redraw the scene
 		break;		
 			
-	case 'm' :
-		Matrix4f::test_Multiplikation();
+	case 'k':
+	case 'K':
+		heDS.scaleObjects(0.5f, 0.5f, 0.5f);		
+		glutPostRedisplay();	// use this whenever 3d data changed to redraw the scene
 		break;		
-		// =========================================
+	case 't':
+	case 'T':
+		heDS.translateObjects(0.5,2,0.5);		
+		glutPostRedisplay();	// use this whenever 3d data changed to redraw the scene
+		break;		
 
+	case 'Q' :					
 	case 'q' :
-		Matrix4f::test_vecMult();
-		break;		
-		// =========================================
-
+			
+		heDS.quaternion(0.0f, 1.0f, 0.0f, 0.0f);
+		glutPostRedisplay();
+		break;
 
 
 		default:

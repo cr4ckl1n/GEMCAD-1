@@ -147,6 +147,21 @@ Matrix4f Matrix4f::translateMatrix(int dx, int dy, int dz){
 	return result;
 }
 
+Matrix4f Matrix4f::quaternion(double a, double b, double c, double d){
+	Matrix4f result;
+	result.values[0][0] = (a*a) + (b*b) - (c*c) -(d*d);
+	result.values[1][0] = 2.0f*((b*c) -(a*d));
+	result.values[2][0] = 2.0f*(b*d+a*c);
+	result.values[0][1] = 2.0f*(b*c+a*d);
+	result.values[1][1] = (a*a) - (b*b) + (c*c) - (d*d);
+	result.values[2][1] = 2.0f*(c*d-a*b);
+	result.values[0][2] = 2.0f*(b*d-a*c);
+	result.values[1][2] = 2.0f*(c*d+a*b);
+	result.values[2][2] = (a*a)-(b*b)-(c*c)+(d*d);
+	return result;
+
+}
+
 
 Matrix4f Matrix4f::test_Multiplikation(){
 	Matrix4f a(1.0f);

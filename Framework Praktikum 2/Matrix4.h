@@ -51,6 +51,8 @@ public:
 	static Matrix4f scaleMatrix(float sx, float sy, float sz);
 	// Translate the Matrix to point dx,dy,dz.
 	static Matrix4f translateMatrix(int dx, int dy, int dz);
+	//Rotationmatrix via Quaternions
+	static Matrix4f quaternion(double a, double b, double c, double d);
 
 	static Matrix4f test_Multiplikation();
 	static Vec4f test_vecMult();

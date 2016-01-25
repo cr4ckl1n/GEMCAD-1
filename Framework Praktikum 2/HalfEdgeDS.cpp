@@ -500,7 +500,105 @@ void HalfEdgeDS::rotateAllVerticesZ(const float angleInRadian)
 	edges = temp_edges;
 }
 
+void HalfEdgeDS::scaleObjects(const float scaleX,const float scaleY,const float scaleZ){
+	Matrix4f m = Matrix4f::scaleMatrix(scaleX,scaleY,scaleZ);
+		// Used to scale all Edges
+	temp_vertices.clear();
+	unsigned int vertices_size = vertices.size();
+	for(unsigned int i=0; i < vertices_size; i++){
+		vertices.front()->coordinates = m.operator*(vertices.front()->coordinates);
+		temp_vertices.push_back(vertices.front());
+		vertices.pop_front();
+	}
+	vertices = temp_vertices; 
+	//Used to scale all bezier curves	
+	temp_edges.clear();
+	std::vector<Vec3f> cps_vect;
+	unsigned int edges_size = edges.size();
+	for( unsigned int i = 0 ; i < edges_size ; i++ ){
+		if(edges.front()->bezierCurve.getControlPoints().size() > 0){
+			unsigned int cps_size = edges.front()->bezierCurve.getControlPoints().size();
+			for(unsigned int n=0; n< cps_size; n++){
+				cps_vect.push_back(m.operator*(edges.front()->bezierCurve.getControlPoints().back()));
+				edges.front()->bezierCurve.getControlPoints().pop_back();	
+						
+			}
 
+			edges.front()->set(BezierCurve(cps_vect));
+			
+		}
+		temp_edges.push_back(edges.front());
+			edges.pop_front();	
+	}
+	edges = temp_edges;
+}
+
+void HalfEdgeDS::translateObjects(int dx, int dy, int dz){
+	Matrix4f m = Matrix4f::translateMatrix(dx, dy, dz);
+			// Used to translate all Edges
+	temp_vertices.clear();
+	unsigned int vertices_size = vertices.size();
+	for(unsigned int i=0; i < vertices_size; i++){
+		vertices.front()->coordinates = m.operator*(vertices.front()->coordinates);
+		temp_vertices.push_back(vertices.front());
+		vertices.pop_front();
+	}
+	vertices = temp_vertices; 
+	//Used to translate all bezier curves	
+	temp_edges.clear();
+	std::vector<Vec3f> cps_vect;
+	unsigned int edges_size = edges.size();
+	for( unsigned int i = 0 ; i < edges_size ; i++ ){
+		if(edges.front()->bezierCurve.getControlPoints().size() > 0){
+			unsigned int cps_size = edges.front()->bezierCurve.getControlPoints().size();
+			for(unsigned int n=0; n< cps_size; n++){
+				cps_vect.push_back(m.operator*(edges.front()->bezierCurve.getControlPoints().back()));
+				edges.front()->bezierCurve.getControlPoints().pop_back();	
+						
+			}
+
+			edges.front()->set(BezierCurve(cps_vect));
+			
+		}
+		temp_edges.push_back(edges.front());
+			edges.pop_front();	
+	}
+	edges = temp_edges;
+}
+
+void HalfEdgeDS::quaternion(double a, double b, double c, double d){
+	Matrix4f m = Matrix4f::quaternion(a,b,c,d);
+	std::cout << m << std::endl;
+	// Used to rotate all Edges
+	temp_vertices.clear();
+	unsigned int vertices_size = vertices.size();
+	for(unsigned int i=0; i < vertices_size; i++){
+		vertices.front()->coordinates = m.operator*(vertices.front()->coordinates);
+		temp_vertices.push_back(vertices.front());
+		vertices.pop_front();
+	}
+	vertices = temp_vertices; 
+	//Used to rotate all bezier curves	
+	temp_edges.clear();
+	std::vector<Vec3f> cps_vect;
+	unsigned int edges_size = edges.size();
+	for( unsigned int i = 0 ; i < edges_size ; i++ ){
+		if(edges.front()->bezierCurve.getControlPoints().size() > 0){
+			unsigned int cps_size = edges.front()->bezierCurve.getControlPoints().size();
+			for(unsigned int n=0; n< cps_size; n++){
+				cps_vect.push_back(m.operator*(edges.front()->bezierCurve.getControlPoints().back()));
+				edges.front()->bezierCurve.getControlPoints().pop_back();	
+						
+			}
+
+			edges.front()->set(BezierCurve(cps_vect));
+			
+		}
+		temp_edges.push_back(edges.front());
+			edges.pop_front();	
+	}
+	edges = temp_edges;
+}
 
 std::ostream& operator<< (std::ostream& os, HalfEdgeDS& ds)
 {
