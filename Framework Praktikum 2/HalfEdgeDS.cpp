@@ -414,57 +414,90 @@ void HalfEdgeDS::rotateAllVerticesX(const float angleInRadian)
 		vertices.pop_front();
 	}
 	vertices = temp_vertices; 
-	// Used to rotate all control points of bezier curve 	
+	//Used to rotate all bezier curve	
 	temp_edges.clear();
-	unsigned int edge_size = edges.size();
-	std::list<Vec3f> cps_list;
 	std::vector<Vec3f> cps_vect;
-	for (unsigned int i = 0; i < edge_size; i++){
+	unsigned int edges_size = edges.size();
+	for( unsigned int i = 0 ; i < edges_size ; i++ ){
 		if(edges.front()->bezierCurve.getControlPoints().size() > 0){
 			unsigned int cps_size = edges.front()->bezierCurve.getControlPoints().size();
-
-			std::cout << "size: " << cps_size << std::endl;
-		
 			for(unsigned int n=0; n< cps_size; n++){
-				cps_list.push_front(m.operator*(edges.front()->bezierCurve.getControlPoints().back()));
-				std::cout<< cps_list.front() << "cps-list" << std::endl;
-				edges.front()->bezierCurve.getControlPoints().pop_back();			
+				cps_vect.push_back(m.operator*(edges.front()->bezierCurve.getControlPoints().back()));
+				edges.front()->bezierCurve.getControlPoints().pop_back();				
 			}
-		
-			for (unsigned n = 0 ; n < cps_size; n++) { 
-				cps_vect.push_back(cps_list.front());
-				cps_list.pop_front();
-			}
-		
-		edges.front()->set(BezierCurve(cps_vect));
-		temp_edges.push_back(edges.front());
-		edges.pop_front();
+			edges.front()->set(BezierCurve(cps_vect));	
 		}
-
+		temp_edges.push_back(edges.front());
+		edges.pop_front();	
 	}
 	edges = temp_edges;
-	
 	
 }
 
 void HalfEdgeDS::rotateAllVerticesY(const float angleInRadian)
 {
 	Matrix4f m = Matrix4f::rotationYMatrix(angleInRadian);
+	// Used to rotate all Vertices coordinates
+	temp_vertices.clear();
+	unsigned int vertices_size = vertices.size();
+	for(unsigned int i=0; i < vertices_size; i++){
+		vertices.front()->coordinates = m.operator*(vertices.front()->coordinates);
+		temp_vertices.push_back(vertices.front());
+		vertices.pop_front();
+	}
+	vertices = temp_vertices; 
+	//Used to rotate all bezier curve	
+	temp_edges.clear();
+	std::vector<Vec3f> cps_vect;
+	unsigned int edges_size = edges.size();
+	for( unsigned int i = 0 ; i < edges_size ; i++ ){
+		if(edges.front()->bezierCurve.getControlPoints().size() > 0){
+			unsigned int cps_size = edges.front()->bezierCurve.getControlPoints().size();
+			for(unsigned int n=0; n< cps_size; n++){
+				cps_vect.push_back(m.operator*(edges.front()->bezierCurve.getControlPoints().back()));
+				edges.front()->bezierCurve.getControlPoints().pop_back();	
+				}
 
-	// TODO: apply the transformation on the vertices coordinates and the bezier curve control points
-	// ==============================================================================================
-
-	// ==============================================================================================
+			edges.front()->set(BezierCurve(cps_vect));
+			}
+		temp_edges.push_back(edges.front());
+			edges.pop_front();	
+	}
+	edges = temp_edges;
 }
 
 void HalfEdgeDS::rotateAllVerticesZ(const float angleInRadian)
 {
 	Matrix4f m = Matrix4f::rotationZMatrix(angleInRadian);
+	// Used to rotate all Vertices coordinates
+	temp_vertices.clear();
+	unsigned int vertices_size = vertices.size();
+	for(unsigned int i=0; i < vertices_size; i++){
+		vertices.front()->coordinates = m.operator*(vertices.front()->coordinates);
+		temp_vertices.push_back(vertices.front());
+		vertices.pop_front();
+	}
+	vertices = temp_vertices; 
+	//Used to rotate all bezier curve	
+	temp_edges.clear();
+	std::vector<Vec3f> cps_vect;
+	unsigned int edges_size = edges.size();
+	for( unsigned int i = 0 ; i < edges_size ; i++ ){
+		if(edges.front()->bezierCurve.getControlPoints().size() > 0){
+			unsigned int cps_size = edges.front()->bezierCurve.getControlPoints().size();
+			for(unsigned int n=0; n< cps_size; n++){
+				cps_vect.push_back(m.operator*(edges.front()->bezierCurve.getControlPoints().back()));
+				edges.front()->bezierCurve.getControlPoints().pop_back();	
+						
+			}
 
-	// TODO: apply the transformation on the vertices coordinates and the bezier curve control points
-	// ==============================================================================================
-
-	// ==============================================================================================
+			edges.front()->set(BezierCurve(cps_vect));
+			
+		}
+		temp_edges.push_back(edges.front());
+			edges.pop_front();	
+	}
+	edges = temp_edges;
 }
 
 
