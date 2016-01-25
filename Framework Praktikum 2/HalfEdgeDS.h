@@ -33,6 +33,8 @@ protected:
 	std::list<Edge*> edges;
 	std::list<HalfEdge*> halfEdges;
 	std::list<Vertex*> vertices;
+	std::list<Vertex*> temp_vertices;
+	std::list<Edge*> temp_edges;
 	// counters only used to assign each element a unique ID
 	size_t cSolids, cShells, cFaces, cLoops, cEdges, cHalfEdges, cVertices;
 

@@ -49,6 +49,7 @@ void HalfEdgeDS::createDefaultObject(int state)
 	cps.push_back(Vec3f(3.0f, 1.0f, 1.0f));
 	BezierCurve bezierCurve(cps);
 	e0->set(bezierCurve);
+	
 
 	if (state <= 1) return;
 	Edge *e1 = nullptr;
@@ -404,11 +405,32 @@ float HalfEdgeDS::calculateRingsWithEulerPoincare()
 void HalfEdgeDS::rotateAllVerticesX(const float angleInRadian)
 {
 	Matrix4f m = Matrix4f::rotationXMatrix(angleInRadian);
+	// Used to rotate all Vertices coordinates
+	temp_vertices.clear();
+	unsigned int vertices_size = vertices.size();
+	for(unsigned int i=0; i < vertices_size; i++){
+		vertices.front()->coordinates = m.operator*(vertices.front()->coordinates);
+		temp_vertices.push_back(vertices.front());
+		vertices.pop_front();
+	}
+	vertices = temp_vertices;
+	// Used to rotate all control points of bezier curve 
+	// TODO : FIX-IT !
+	/*temp_edges.clear();
+	unsigned int edge_size = edges.size();
+	std::vector<Vec3f> cps;
+	for (unsigned int i; i < edge_size; i++){
+		unsigned int cps_size = edges.front()->bezierCurve.getControlPoints().size();
+		for(unsigned int n=0; n< cps_size; n++){
+			cps.push_front(edges.front()->bezierCurve.getControlPoints().back());
+			
+		}
+		edges.front()->set(BezierCurve(m.operator*(edges.front()->bezierCurve.getControlPoints().front())));
+		temp_edges.push_back(edges.front());
+		edges.pop_front();
+	}
+	edges = temp_edges;*/
 
-	// TODO: apply the transformation on the vertices coordinates and the bezier curve control points
-	// ==============================================================================================
-
-	// ==============================================================================================
 }
 
 void HalfEdgeDS::rotateAllVerticesY(const float angleInRadian)
