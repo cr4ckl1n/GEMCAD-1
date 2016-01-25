@@ -413,24 +413,38 @@ void HalfEdgeDS::rotateAllVerticesX(const float angleInRadian)
 		temp_vertices.push_back(vertices.front());
 		vertices.pop_front();
 	}
-	vertices = temp_vertices;
-	// Used to rotate all control points of bezier curve 
-	// TODO : FIX-IT !
-	/*temp_edges.clear();
+	vertices = temp_vertices; 
+	// Used to rotate all control points of bezier curve 	
+	temp_edges.clear();
 	unsigned int edge_size = edges.size();
-	std::vector<Vec3f> cps;
-	for (unsigned int i; i < edge_size; i++){
-		unsigned int cps_size = edges.front()->bezierCurve.getControlPoints().size();
-		for(unsigned int n=0; n< cps_size; n++){
-			cps.push_front(edges.front()->bezierCurve.getControlPoints().back());
-			
-		}
-		edges.front()->set(BezierCurve(m.operator*(edges.front()->bezierCurve.getControlPoints().front())));
+	std::list<Vec3f> cps_list;
+	std::vector<Vec3f> cps_vect;
+	for (unsigned int i = 0; i < edge_size; i++){
+		if(edges.front()->bezierCurve.getControlPoints().size() > 0){
+			unsigned int cps_size = edges.front()->bezierCurve.getControlPoints().size();
+
+			std::cout << "size: " << cps_size << std::endl;
+		
+			for(unsigned int n=0; n< cps_size; n++){
+				cps_list.push_front(m.operator*(edges.front()->bezierCurve.getControlPoints().back()));
+				std::cout<< cps_list.front() << "cps-list" << std::endl;
+				edges.front()->bezierCurve.getControlPoints().pop_back();			
+			}
+		
+			for (unsigned n = 0 ; n < cps_size; n++) { 
+				cps_vect.push_back(cps_list.front());
+				cps_list.pop_front();
+			}
+		
+		edges.front()->set(BezierCurve(cps_vect));
 		temp_edges.push_back(edges.front());
 		edges.pop_front();
-	}
-	edges = temp_edges;*/
+		}
 
+	}
+	edges = temp_edges;
+	
+	
 }
 
 void HalfEdgeDS::rotateAllVerticesY(const float angleInRadian)
