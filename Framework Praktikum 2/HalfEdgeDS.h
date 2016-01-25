@@ -110,6 +110,12 @@ public:
 	void rotateAllVerticesY(const float angleInRadian);
 	// rotates the objects around the z axis
 	void rotateAllVerticesZ(const float angleInRadian);
+	// scales the objects for given values
+	void scaleObjects(const float scaleX, const float scaleY, const float scaleZ);
+	// translates the objects for given values
+	void translateObjects(const int dx, const int dy, const int dz);
+	//quaternion rotation
+	void quaternion(const double a,const double b,const double c,const double d);
 
 
 private:
