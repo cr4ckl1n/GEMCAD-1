@@ -116,7 +116,8 @@ public:
 	void translateObjects(const int dx, const int dy, const int dz);
 	//quaternion rotation
 	void quaternion(const double a,const double b,const double c,const double d);
-
+	//
+	void set_bezier();
 
 private:
 

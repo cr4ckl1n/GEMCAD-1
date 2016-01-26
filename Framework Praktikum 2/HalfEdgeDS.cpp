@@ -1,4 +1,4 @@
-#include "HalfEdgeDS.h"
+﻿#include "HalfEdgeDS.h"
 
 #include <stdio.h>
 #include <iostream>
@@ -19,9 +19,7 @@ HalfEdgeDS::~HalfEdgeDS()
 
 void HalfEdgeDS::createDefaultObject(int state)
 {
-	// TODO: add more bezier curves to the object
-	// ==========================================
-
+	
 	clearDS();
 
 	// front quad (xy-plane, z = 1.0f)
@@ -564,6 +562,16 @@ void HalfEdgeDS::translateObjects(int dx, int dy, int dz){
 			edges.pop_front();	
 	}
 	edges = temp_edges;
+}
+
+void HalfEdgeDS::set_bezier(){
+	std::vector<Vec3f> cps;
+    cps.push_back(Vec3f(3.0f, 0.0f, 0.0f));
+    cps.push_back(Vec3f(5.0f, 2.0f, 0.0f));
+    cps.push_back(Vec3f(5.0f, 2.0f, 0.0f));
+    cps.push_back(Vec3f(6.0f, 0.0f, 0.0f));
+	BezierCurve bezier(cps);
+	edges.front()->set(bezier);
 }
 
 void HalfEdgeDS::quaternion(double a, double b, double c, double d){
