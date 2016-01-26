@@ -40,13 +40,13 @@ void HalfEdgeDS::createDefaultObject(int state)
 	MEVVLS(solid, Vec3f(1.0f, 1.0f, 1.0f), Vec3f(3.0f, 1.0f, 1.0f), &s0, &f0, &l0, &e0, &v0, &v1);
 
 	// example bezier curve edge
-	std::vector<Vec3f> cps;
-	cps.push_back(Vec3f(1.0f, 1.0f, 1.0f));
-	cps.push_back(Vec3f(1.6f, 0.5f, 1.0f));
-	cps.push_back(Vec3f(2.3f, 0.5f, 1.0f));
-	cps.push_back(Vec3f(3.0f, 1.0f, 1.0f));
-	BezierCurve bezierCurve(cps);
-	e0->set(bezierCurve);
+	std::vector<Vec3f> cps0;
+	cps0.push_back(Vec3f(1.0f, 1.0f, 1.0f));
+	cps0.push_back(Vec3f(1.6f, 0.5f, 1.0f));
+	cps0.push_back(Vec3f(2.3f, 0.5f, 1.0f));
+	cps0.push_back(Vec3f(3.0f, 1.0f, 1.0f));
+	BezierCurve bezierCurve1(cps0);
+	e0->set(bezierCurve1);
 	
 
 	if (state <= 1) return;
@@ -564,15 +564,7 @@ void HalfEdgeDS::translateObjects(int dx, int dy, int dz){
 	edges = temp_edges;
 }
 
-void HalfEdgeDS::set_bezier(){
-	std::vector<Vec3f> cps;
-    cps.push_back(Vec3f(3.0f, 0.0f, 0.0f));
-    cps.push_back(Vec3f(5.0f, 2.0f, 0.0f));
-    cps.push_back(Vec3f(5.0f, 2.0f, 0.0f));
-    cps.push_back(Vec3f(6.0f, 0.0f, 0.0f));
-	BezierCurve bezier(cps);
-	edges.front()->set(bezier);
-}
+
 
 void HalfEdgeDS::quaternion(double a, double b, double c, double d){
 	Matrix4f m = Matrix4f::quaternion(a,b,c,d);
@@ -606,6 +598,21 @@ void HalfEdgeDS::quaternion(double a, double b, double c, double d){
 			edges.pop_front();	
 	}
 	edges = temp_edges;
+}
+
+int HalfEdgeDS::testeBezier(){
+    printf("testeBezier\n");
+    std::vector<Vec3f> cps1;
+    cps1.push_back(Vec3f(3.0f, 1.0f, 1.0f));
+    cps1.push_back(Vec3f(3.0f, 1.25f, 2.0f));
+    cps1.push_back(Vec3f(3.0f, 1.75f, 2.0f));
+    cps1.push_back(Vec3f(3.0f, 2.0f, 1.0f));
+    BezierCurve bezierCurve1(cps1);
+	edges.front()->set(bezierCurve1);
+    bezierCurve1.separateCurveAt(0.5);
+    
+    
+    return 0;
 }
 
 std::ostream& operator<< (std::ostream& os, HalfEdgeDS& ds)

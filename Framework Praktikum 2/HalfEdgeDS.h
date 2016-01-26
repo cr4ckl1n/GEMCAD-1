@@ -60,7 +60,7 @@ public:
 	const std::list<Edge*>& getEdges() const { return edges; }
 	const std::list<HalfEdge*>& getHalfEdges() const { return halfEdges; }
 	const std::list<Vertex*>& getVertices() const { return vertices; }
-
+	int testeBezier();
 	// overloading the << operator to print our information of the class. declared as friend, so the function has access to private members.
 	friend std::ostream& operator<< (std::ostream& os, HalfEdgeDS& ds);
 
