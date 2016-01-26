@@ -32,10 +32,11 @@ public:
 
 	// evaluate the curve at parameter t with de Casteljau algorithm. Returns both bezier curves seperated at parameter t.
 	std::pair<BezierCurve, BezierCurve> separateCurveAt(const float t);
-
+    
 	// overloading the << operator to print our information of the class. declared as friend, so the function has access to private members.
 	friend std::ostream& operator<< (std::ostream& os, BezierCurve& bezierCurve);
 
+	int testeBezier();
 private:
 
 	// class data:

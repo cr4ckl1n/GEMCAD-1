@@ -286,7 +286,7 @@ void keyPressed(unsigned char key, int x, int y)
 		break;		
 	case 't':
 	case 'T':
-		heDS.translateObjects(0.5,2,0.5);		
+		heDS.translateObjects(0.5f,2.0f,0.5f);		
 		glutPostRedisplay();	// use this whenever 3d data changed to redraw the scene
 		break;		
 
@@ -300,7 +300,7 @@ void keyPressed(unsigned char key, int x, int y)
 	case 'i':
 		Matrix4f::test_vecMult();
 		Matrix4f::test_Multiplikation();
-		heDS.set_bezier();
+		heDS.testeBezier();
 		glutPostRedisplay();
 		break;
 	case 'D' :					
