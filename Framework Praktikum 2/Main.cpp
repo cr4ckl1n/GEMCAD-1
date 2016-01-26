@@ -216,13 +216,8 @@ void keyPressed(unsigned char key, int x, int y)
 		glutPostRedisplay();	// use this whenever 3d data changed to redraw the scene
 		break;
 		// numbers starting with 0 (key == 48)
-	case 48:
-		Matrix4f::test_vecMult();
-		break;	
-	case 49:
-		
-		Matrix4f::test_Multiplikation();
-		break;		
+	case 48:	
+	case 49:		
 	case 50:
 	case 51:
 	case 52:
@@ -302,6 +297,18 @@ void keyPressed(unsigned char key, int x, int y)
 		glutPostRedisplay();
 		break;
 
+	case 'i':
+		Matrix4f::test_vecMult();
+		Matrix4f::test_Multiplikation();
+		heDS.set_bezier();
+		glutPostRedisplay();
+		break;
+	case 'D' :					
+	case 'd' :
+		
+		
+		glutPostRedisplay();
+		break;
 
 		default:
 		std::cout << int(key) << " not bound!" << std::endl;
