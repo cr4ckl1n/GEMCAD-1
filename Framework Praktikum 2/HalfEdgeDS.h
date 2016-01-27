@@ -60,7 +60,6 @@ public:
 	const std::list<Edge*>& getEdges() const { return edges; }
 	const std::list<HalfEdge*>& getHalfEdges() const { return halfEdges; }
 	const std::list<Vertex*>& getVertices() const { return vertices; }
-	int testeBezier();
 	// overloading the << operator to print our information of the class. declared as friend, so the function has access to private members.
 	friend std::ostream& operator<< (std::ostream& os, HalfEdgeDS& ds);
 
@@ -116,7 +115,10 @@ public:
 	void translateObjects(const int dx, const int dy, const int dz);
 	//quaternion rotation
 	void quaternion(const double a,const double b,const double c,const double d);
+	
+	int testeBezier(HalfEdge* active_he);
 	//
+
 	void set_bezier();
 
 private:

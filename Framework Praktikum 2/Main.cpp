@@ -298,16 +298,15 @@ void keyPressed(unsigned char key, int x, int y)
 		break;
 
 	case 'i':
-		Matrix4f::test_vecMult();
-		Matrix4f::test_Multiplikation();
-		heDS.testeBezier();
+		heDS.testeBezier(activeHE);
 		glutPostRedisplay();
 		break;
 	case 'D' :					
 	case 'd' :
 		
 		
-		glutPostRedisplay();
+		Matrix4f::test_vecMult();
+		Matrix4f::test_Multiplikation();
 		break;
 
 		default:
