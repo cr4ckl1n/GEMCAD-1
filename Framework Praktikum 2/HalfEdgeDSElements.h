@@ -123,7 +123,7 @@ struct Edge
 	HalfEdge* he1;			// one half edge
 	HalfEdge* he2;			// the other half edge
 	BezierCurve bezierCurve;// geometric representation of the edge as bezier curve
-
+	bool has_bezier;
 	// empty constructor which initializes all pointers with nullptr
 	Edge();
 

@@ -47,20 +47,24 @@ void HalfEdgeDS::createDefaultObject(int state)
 	cps0.push_back(Vec3f(3.0f, 1.0f, 1.0f));
 	BezierCurve bezierCurve1(cps0);
 	e0->set(bezierCurve1);
+	e0->has_bezier = true;
 	
 
 	if (state <= 1) return;
 	Edge *e1 = nullptr;
 	Vertex* v2 = nullptr;
 	MEV(l0, v1, Vec3f(3.0f, 2.0f, 1.0f), &e1, &v2);
+	e1->has_bezier = false;
 	Edge *e2 = nullptr;
 	Vertex* v3 = nullptr;
 	MEV(l0, v2, Vec3f(1.0f, 2.0f, 1.0f), &e2, &v3);
+	e2->has_bezier = false;
 	if (state <= 2) return;
 	Face *f1 = nullptr;
 	Loop *l1 = nullptr;
 	Edge* e3 = nullptr;	
 	MEL(l0, v3, v0, &f1, &l1, &e3);
+	e3->has_bezier = false;
 	if (state <= 3) return;
 	
 	// bottom quad (xz-plane, y = 1.0f)
@@ -73,14 +77,17 @@ void HalfEdgeDS::createDefaultObject(int state)
 	Edge *e4 = nullptr;
 	Vertex* v4 = nullptr;
 	MEV(l0, v0, Vec3f(1.0f, 1.0f, -2.0f), &e4, &v4);
+	e4->has_bezier = false;
 	Edge *e5 = nullptr;
 	Vertex* v5 = nullptr;
 	MEV(l0, v4, Vec3f(3.0f, 1.0f, -2.0f), &e5, &v5);
+	e5->has_bezier = false;
 	if (state <= 4) return;
 	Face *f2 = nullptr;
 	Loop *l2 = nullptr;
 	Edge* e6 = nullptr;	
 	MEL(l0, v5, v1, &f2, &l2, &e6);
+	e6->has_bezier = false;
 	if (state <= 5) return;
 	
 	// left quad (yz-plane, x = 1.0f)
@@ -92,11 +99,13 @@ void HalfEdgeDS::createDefaultObject(int state)
 	Edge *e7 = nullptr;
 	Vertex* v6 = nullptr;
 	MEV(l0, v3, Vec3f(1.0f, 2.0f, -2.0f), &e7, &v6);
+	e7->has_bezier = false;
 	if (state <= 6) return;
 	Face *f3 = nullptr;
 	Loop *l3 = nullptr;
 	Edge* e8 = nullptr;	
 	MEL(l0, v6, v4, &f3, &l3, &e8);
+	e8->has_bezier = false;
 	if (state <= 7) return;
 	
 	// right quad (yz-plane, x = 3.0f)
@@ -108,11 +117,13 @@ void HalfEdgeDS::createDefaultObject(int state)
 	Edge *e9 = nullptr;
 	Vertex* v7 = nullptr;
 	MEV(l0, v5, Vec3f(3.0f, 2.0f, -2.0f), &e9, &v7);
+	e9->has_bezier = false;
 	if (state <= 8) return;
 	Face *f4 = nullptr;
 	Loop *l4 = nullptr;
 	Edge* e10 = nullptr;	
 	MEL(l0, v7, v2, &f4, &l4, &e10);
+	e10->has_bezier = false;
 	if (state <= 9) return;
 
 	// back quad (xy-plane, z = -2.0f)
@@ -126,6 +137,7 @@ void HalfEdgeDS::createDefaultObject(int state)
 	Loop *l5 = nullptr;
 	Edge* e11 = nullptr;
 	MEL(l0, v6, v7, &f5, &l5, &e11);
+	e11->has_bezier = false;
 	if (state <= 10) return;
 
 	// top hole (xz-plane, y = 2.0f)
@@ -600,16 +612,72 @@ void HalfEdgeDS::quaternion(double a, double b, double c, double d){
 	edges = temp_edges;
 }
 
-int HalfEdgeDS::testeBezier(){
-    printf("testeBezier\n");
+int HalfEdgeDS::testeBezier(HalfEdge* active_he){
+
+	if(!active_he->toEdge->has_bezier){
     std::vector<Vec3f> cps1;
-    cps1.push_back(Vec3f(3.0f, 1.0f, 1.0f));
-    cps1.push_back(Vec3f(3.0f, 1.25f, 2.0f));
-    cps1.push_back(Vec3f(3.0f, 1.75f, 2.0f));
-    cps1.push_back(Vec3f(3.0f, 2.0f, 1.0f));
+	HalfEdge* opp = active_he->oppHE();
+	cps1.push_back(active_he->startV->coordinates);
+	
+	float  x1 = active_he->startV->coordinates.x;
+	float y1 = active_he->startV->coordinates.y;
+	float z1 = active_he->startV->coordinates.z;
+	float x2 = opp->startV->coordinates.x;
+	float y2 =opp->startV->coordinates.y;
+	float z2 = opp->startV->coordinates.z;
+	float x3, x4, y3, y4, z3, z4;
+
+	if (x1 > x2){
+		x3 = x1  -0.25f;
+		x4 = x1 - 0.5f;
+	}else if(x2 > x1) {
+		x3 = x1 + 0.25f;
+		x4 = x1 + 0.5f;
+	}else {
+		x3 = x1;
+		x4 = x1;
+	}
+	if (y1 > y2){
+		y3 = y1 - 0.25f;
+		y4 = y1 - 0.5f;
+	}else if(y2 > y1) {
+		y3 = y1 + 0.25f;
+		y4 = y1 + 0.5f;
+	}else {
+		y3 = y1;
+		y4 = y1;
+	}
+	if (z1 > z2){
+		z3 = z1 - 0.25f;
+		z4 = z1 - 0.5f;
+	}else if(z2 > z1) {
+		z3 = z2 + 0.25f;
+		z4 = z2 + 0.5f;
+	}else {
+		z3 = z1;
+		z4 = z1;
+	}
+	if(x3 == x4 && y3 == y4){
+		x3 += 1.0f;
+		x4 += 1.0f;
+	}
+	if(y3 == y4 && z3 == z4){
+		y3 += 1.0f;
+		y4 += 1.0f;
+	}
+	if(z3 == z4 && x3 == x4){
+		z3 += 1.0f;
+		z4 += 1.0f;
+	}
+
+	cps1.push_back(Vec3f(x3,y3,z3));
+	cps1.push_back(Vec3f(x4,y4,z4));
+	cps1.push_back(opp->startV->coordinates);
     BezierCurve bezierCurve1(cps1);
-	edges.front()->set(bezierCurve1);
+	std::cout << edges.front()->bezierCurve << std::endl;
+	active_he->toEdge->set(bezierCurve1);
     bezierCurve1.separateCurveAt(0.5);
+	}
     
     
     return 0;
